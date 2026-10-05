@@ -4,6 +4,7 @@ import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 import { Footer } from "../components/layout/Footer";
 import { StructuredData } from "../components/layout/StructuredData";
 import { Navbar } from "../components/navigation/Navbar";
+import { BackToTop } from "../components/ui/BackToTop";
 import { MotionProvider } from "../components/motion/MotionProvider";
 import { profile } from "../content/profile";
 import { siteUrl } from "../lib/seo";
@@ -128,6 +129,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </main>
           </MotionProvider>
           <Footer />
+          <BackToTop />
         </div>
       </body>
     </html>

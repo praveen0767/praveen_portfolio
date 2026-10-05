@@ -58,13 +58,13 @@ export function ContactPage() {
                 target={channel.external ? "_blank" : undefined}
                 rel={channel.external ? "noopener noreferrer" : undefined}
               >
-                <span className="contact-channel__label">
-                  <span className="contact-channel__icon" style={{ color: `var(--brand-${channel.id})` }}>
-                    <SocialIcon id={channel.id} size={18} />
-                  </span>
-                  {channel.label}
+                <span className="contact-channel__icon" style={{ color: `var(--brand-${channel.id})` }}>
+                  <SocialIcon id={channel.id} size={24} />
                 </span>
-                <span className="contact-channel__value">{channel.description}</span>
+                <span className="contact-channel__content">
+                  <span className="contact-channel__label">{channel.label}</span>
+                  <span className="contact-channel__value">{channel.description}</span>
+                </span>
                 <span className="contact-channel__arrow" aria-hidden="true">
                   {channel.external ? "↗" : "→"}
                 </span>

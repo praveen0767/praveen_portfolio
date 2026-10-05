@@ -73,6 +73,7 @@ test("contact channels resolve to the profile values", () => {
 
 test("navigation only points at routes that exist in the app directory", () => {
   const routes = [
+    "/",
     "/work",
     "/engineering",
     "/proof",
@@ -83,6 +84,8 @@ test("navigation only points at routes that exist in the app directory", () => {
   ];
   assert.equal(navLinks.length, routes.length);
   navLinks.forEach((link) => assert.ok(routes.includes(link.href), `unexpected route ${link.href}`));
+  assert.equal(navLinks[0].href, "/", "Home route must be first");
+  assert.equal(navLinks[0].label, "Home", "First nav link must be labelled Home");
 });
 
 test("exactly four verified projects are presented, with ARIV first", () => {

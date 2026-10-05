@@ -4,6 +4,7 @@ import { FloatingObject } from "../motion/Depth";
 import { Magnetic } from "../motion/Magnetic";
 import { Parallax } from "../motion/Parallax";
 import { contactChannels, profile } from "../../content/profile";
+import { SocialIcon } from "../ui/SocialLinks";
 
 /**
  * Closing section. Deliberately asymmetric: the email is the oversized element,
@@ -75,8 +76,13 @@ export function ContactCta() {
                     target={channel.external ? "_blank" : undefined}
                     rel={channel.external ? "noopener noreferrer" : undefined}
                   >
-                    <span className="contact-channel__label">{channel.label}</span>
-                    <span className="contact-channel__value">{channel.description}</span>
+                    <span className="contact-channel__icon" style={{ color: `var(--brand-${channel.id})` }}>
+                      <SocialIcon id={channel.id} size={24} />
+                    </span>
+                    <span className="contact-channel__content">
+                      <span className="contact-channel__label">{channel.label}</span>
+                      <span className="contact-channel__value">{channel.description}</span>
+                    </span>
                     <span className="contact-channel__arrow" aria-hidden="true">
                       {channel.external ? "↗" : "→"}
                     </span>

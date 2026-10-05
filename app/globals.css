@@ -1256,14 +1256,17 @@ html[data-theme="light"] .theme-toggle__moon {
      25–33px at desktop while still leaving deliberate breathing room under the
      66px sticky header. The 780px block re-asserts its own mobile padding, so
      390/375/360 are unaffected. */
-  padding-block: clamp(1rem, 1.5vw, 1.4rem) clamp(1rem, 2vw, 1.75rem);
-  overflow: hidden;
-  min-height: calc(100svh - var(--header-h));
+  padding-top: clamp(0.1rem, 0.2vw, 0.2rem);
+  padding-bottom: clamp(0.8rem, 1.5vw, 1.5rem);
+  /* Let content define the height — a forced 100svh min-height clipped the
+     bottom of the composition when the hero content exceeds a single viewport.
+     The hero simply needs enough room for its content, not an empty frame. */
+  min-height: 0;
 /* Grid rather than flex: as a flex row the scroll cue was laid out *beside* the
      container and pushed past the viewport, which clipped it at 390px. */
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    align-content: center;
+    align-content: start;
   }
 
 /* Multi-layer ambient background */
@@ -1353,7 +1356,7 @@ html[data-theme="light"] .hero__bg-grid {
      measure than a plain two-column hero gives it. */
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   align-items: center;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(1rem, 2vw, 2rem);
 }
 
 /* ── Copy (left column) ───────────────────────────────────────────────────── */
@@ -1946,9 +1949,9 @@ html[data-theme="light"] .desk__portrait-frame {
   position: relative;
   z-index: 3;
   display: grid;
-  gap: 0.15rem;
+  gap: 0.1rem;
   align-content: start;
-  padding: clamp(0.48rem, 0.62vw, 0.56rem) clamp(0.55rem, 0.8vw, 0.72rem);
+  padding: clamp(0.25rem, 0.35vw, 0.35rem) clamp(0.35rem, 0.5vw, 0.45rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: linear-gradient(
@@ -2033,7 +2036,7 @@ html[data-theme="light"] .map {
 .map__link-line {
   display: block;
   width: 100%;
-  height: 0.4rem;
+  height: 0.15rem;
   overflow: visible;
 }
 
@@ -2048,7 +2051,7 @@ html[data-theme="light"] .map {
 .map__graph,
 .map__pair {
   display: grid;
-  gap: 0.22rem;
+  gap: 0.18rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2058,7 +2061,7 @@ html[data-theme="light"] .map {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   /* Wider gap between the two branch nodes (SOFTWARE / AI SYSTEMS,
      INTEGRATION / INFRASTRUCTURE) so they read as visually distinct. */
-  gap: clamp(0.45rem, 0.7vw, 0.65rem);
+  gap: clamp(0.35rem, 0.6vw, 0.5rem);
 }
 
 /* ── Capability node ── */
@@ -2066,9 +2069,9 @@ html[data-theme="light"] .map {
       position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      gap: 0.13rem;
+      gap: 0.08rem;
       align-content: start;
-  padding: 0.2rem 0.32rem 0.24rem;
+  padding: 0.1rem 0.2rem 0.15rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--surface) 82%, transparent);
@@ -2159,7 +2162,7 @@ html[data-theme="light"] .map {
 .map__practices {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem;
+  gap: 0.15rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2168,8 +2171,8 @@ html[data-theme="light"] .map {
 .map__practice {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.13rem 0.55rem;
+  gap: 0.25rem;
+  padding: 0.1rem 0.45rem;
   border-radius: var(--radius-pill);
   border: 1px solid color-mix(in srgb, var(--electric) 35%, var(--line));
   background: color-mix(in srgb, var(--electric) 8%, var(--surface));
@@ -2209,7 +2212,7 @@ html[data-theme="light"] .map {
 .map__techs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.16rem;
+  gap: 0.12rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2218,8 +2221,8 @@ html[data-theme="light"] .map {
 .map__tech {
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   border-radius: 7px;
@@ -2305,9 +2308,9 @@ html[data-theme="light"] .map {
 /* ── Console: one reserved band for both the readout and related projects ── */
 .map__console {
   display: grid;
-  gap: 0.3rem;
-  margin-top: 0.12rem;
-  padding-top: 0.4rem;
+  gap: 0.2rem;
+  margin-top: 0.08rem;
+  padding-top: 0.25rem;
   border-top: 1px solid var(--line);
 }
 
@@ -2342,9 +2345,9 @@ html[data-theme="light"] .map {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.45rem;
-  min-height: 2rem;
-  padding-top: 0.26rem;
+  gap: 0.35rem;
+  min-height: 1.8rem;
+  padding-top: 0.2rem;
   border-top: 1px dashed var(--line);
 }
 
@@ -5852,24 +5855,11 @@ html[data-theme="light"] .console {
 }
 
 .contact-channels--compact .contact-channel {
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.35rem 1rem;
-  padding: 0.9rem 1.05rem;
-  border-radius: var(--radius);
-}
-
-.contact-channels--compact .contact-channel__label {
-  grid-column: 1;
+  /* Smaller font for compact value */
 }
 
 .contact-channels--compact .contact-channel__value {
-  grid-column: 1;
   font-size: 0.86rem;
-}
-
-.contact-channels--compact .contact-channel__arrow {
-  grid-row: 1 / span 2;
-  grid-column: 2;
 }
 
 .contact-cta__side > .btn {
@@ -5878,10 +5868,11 @@ html[data-theme="light"] .console {
 
 .contact-channel {
   display: grid;
-  grid-template-columns: minmax(150px, auto) minmax(0, 1fr) auto;
-  gap: 1rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 14px;
   align-items: center;
-  padding: 1.05rem 1.25rem;
+  min-height: clamp(68px, 12vw, 88px);
+  padding: clamp(14px, 2vw, 22px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -5889,30 +5880,40 @@ html[data-theme="light"] .console {
 }
 
 .contact-channel:hover {
-  transform: translateX(6px);
-  border-color: var(--accent);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
-.contact-channel__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-mono-stack);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--micro);
+.contact-channel__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  overflow: hidden;
 }
 
 .contact-channel__icon {
   display: grid;
   place-items: center;
-  flex: 0 0 auto;
-  transition: transform 300ms var(--ease-spring);
+  width: clamp(28px, 4vw, 34px);
+  height: clamp(28px, 4vw, 34px);
+  border-radius: clamp(9px, 1vw, 11px);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  transition: transform 300ms var(--ease-spring), filter 240ms var(--ease), background-color 240ms var(--ease);
 }
 
 .contact-channel:hover .contact-channel__icon {
-  transform: translateY(-2px) scale(1.08);
+  transform: translateY(-1px) scale(1.05);
+  background: color-mix(in srgb, currentColor 18%, transparent);
+  filter: brightness(1.1);
+}
+
+.contact-channel__label {
+  font-family: var(--font-mono-stack);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
 .contact-channel__value {
@@ -5920,16 +5921,18 @@ html[data-theme="light"] .console {
   font-weight: 600;
   font-size: 1.02rem;
   letter-spacing: -0.02em;
-  word-break: break-word;
+  overflow-wrap: anywhere;
+  color: var(--ink);
 }
 
 .contact-channel__arrow {
-  color: var(--accent);
-  transition: transform 300ms var(--ease-spring);
+  color: var(--ink-4);
+  transition: transform 300ms var(--ease-spring), color 300ms var(--ease-spring);
 }
 
 .contact-channel:hover .contact-channel__arrow {
-  transform: translate(3px, -3px);
+  transform: translateX(2px);
+  color: var(--accent);
 }
 
 .contact-grid {
@@ -10287,5 +10290,77 @@ html[data-theme="light"] .arivsys__canvas {
   .section-lede,
   .hero__statement {
     color: #333;
+  }
+}
+
+/* ── Back to Top ─────────────────────────────────────────────────────────── */
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  top: 42vh;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink-3);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 300ms var(--ease), transform 300ms var(--ease-spring), color 200ms var(--ease), border-color 200ms var(--ease), background-color 200ms var(--ease);
+}
+
+.back-to-top--visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--surface-2);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.back-to-top:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.back-to-top:focus-visible {
+  outline: 2px solid var(--electric);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1320px) {
+  .back-to-top {
+    right: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .back-to-top {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none;
+    transform: none;
+  }
+  .back-to-top--visible {
+    transform: none;
   }
 }
