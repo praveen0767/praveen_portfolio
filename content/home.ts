@@ -12,10 +12,22 @@ export type ProcessStage = {
   description: string;
 };
 
+export type FdeStep = {
+  number: string;
+  label: string;
+  description: string;
+};
+
+/** The FDE operating model: the conceptual backbone of the portfolio.
+     Each step is a truthful, generic statement — never a corporate process
+     diagram. The arrows make the forward direction obvious. */
 export type Decision = {
   problem: string;
   approach: string;
 };
+
+
+
 
 /**
  * Single source of truth for capability modules.
@@ -61,6 +73,50 @@ export const heroPillars = capabilities.filter((capability) =>
   ["software", "ai", "data"].includes(capability.id),
 );
 
+export const fdeSteps: FdeStep[] = [
+  {
+    number: "01",
+    label: "Discover",
+    description:
+      "Understand the workflow and actual constraints before choosing a solution.",
+  },
+  {
+    number: "02",
+    label: "Scope",
+    description:
+      "Turn ambiguity into a concrete technical plan.",
+  },
+  {
+    number: "03",
+    label: "Build",
+    description:
+      "Prototype the smallest useful system that validates the approach.",
+  },
+  {
+    number: "04",
+    label: "Integrate",
+    description:
+      "Connect APIs, data and existing infrastructure.",
+  },
+  {
+    number: "05",
+    label: "Deploy",
+    description:
+      "Ship into a real execution environment.",
+  },
+  {
+    number: "06",
+    label: "Evaluate",
+    description:
+      "Measure whether the system actually works.",
+  },  {
+    number: "07",
+    label: "Iterate",
+    description: "Feed learnings back into the solution.",
+  },
+];
+
+
 export const processStages: ProcessStage[] = [
   {
     number: "01",
@@ -104,6 +160,5 @@ export const decisions: Decision[] = [
   { problem: "Simple deterministic problem", approach: "Traditional software" },
   { problem: "Structured data", approach: "Database / query" },
   { problem: "Prediction problem", approach: "Machine learning" },
-  { problem: "Unstructured knowledge", approach: "Retrieval / LLM" },
-  { problem: "Complex multi-step workflow", approach: "Agentic architecture" },
+  { problem: "Unstructured knowledge", approach: "Retrieval / LLM" },  { problem: "Complex multi-step workflow", approach: "Agentic architecture" },
 ];

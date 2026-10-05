@@ -1,0 +1,16 @@
+toolkit-1440x900-long-desc.png {"card":{"l":1004,"t":517,"w":300,"h":266}}
+toolkit-1440x900-four-projects.png {"card":{"l":1004,"t":517,"w":300,"h":362}}
+toolkit-1280x800-long-desc.png {"card":{"l":924,"t":504,"w":300,"h":266}}
+toolkit-1280x800-four-projects.png {"card":{"l":924,"t":504,"w":300,"h":362}}
+toolkit-1024x768-long-desc.png {"card":{"l":46,"t":1021,"w":932,"h":344}}
+toolkit-1024x768-four-projects.png {"card":{"l":46,"t":1021,"w":932,"h":344}}
+toolkit-820x1180-long-desc.png {"card":{"l":37,"t":1232,"w":746,"h":344}}
+toolkit-820x1180-four-projects.png {"card":{"l":37,"t":1232,"w":746,"h":344}}
+toolkit-390x844-long-desc.png {"card":{"l":20,"t":1740,"w":350,"h":344}}
+toolkit-390x844-four-projects.png {"card":{"l":20,"t":1740,"w":350,"h":344}}
+toolkit-375x812-long-desc.png {"card":{"l":20,"t":1739,"w":335,"h":344}}
+toolkit-375x812-four-projects.png {"card":{"l":20,"t":1739,"w":335,"h":344}}
+toolkit-360x800-long-desc.png {"card":{"l":20,"t":1772,"w":320,"h":344}}
+toolkit-360x800-four-projects.png {"card":{"l":20,"t":1772,"w":320,"h":344}}
+toolkit-320x568-long-desc.png {"card":{"l":20,"t":2308,"w":280,"h":344}}
+toolkit-320x568-four-projects.png {"card":{"l":20,"t":2308,"w":280,"h":344}}

@@ -44,10 +44,178 @@ export type Project = {
 };
 
 
+/**
+ * Project 01 — ARIV.
+ *
+ * Every statement below is taken from the repository itself: the README, the
+ * benchmark reports committed under `artifacts/benchmarks`, and the offline
+ * ablation results. Nothing here is inferred, rounded up, or extrapolated, and
+ * the sections that would normally hold marketing numbers (results, evaluation)
+ * deliberately hold the zero-recovery results instead.
+ */
+const ariv: Project = {
+  slug: "ariv-agentic-revenue-recovery",
+  number: "01",
+  title: "ARIV — Agentic Revenue Recovery for Razorpay",
+  shortDescription:
+    "Agentic payment recovery for Razorpay Test Mode. AI agents diagnose failures and propose recovery \u2192 economic ranking \u2192 deterministic PolicyEngine \u2192 durable execution \u2192 provider-confirmed attribution. Honest benchmarks, stopping rules, and recovery measurement.",
+  category: "AI SYSTEM",
+  year: "September 2026",
+  status: "PROTOTYPE",
+  role: "Architecture and development",
+  technologies: ["Python", "FastAPI", "PostgreSQL", "Qdrant", "Next.js", "Docker"],
+  featured: true,
+  priority: 1,
+  verified: true,
+  accent: "electric",
+  diagram: "vertical",
+  problem: {
+    title: "The Problem",
+    body:
+      "Recover failed payments intelligently instead of blindly retrying everything. A failed payment is not automatically a retry candidate, and an action that succeeds is not automatically recovered revenue.",
+  },
+  context: {
+    title: "Context",
+    body:
+      "ARIV is an agentic revenue-recovery control plane for Razorpay, built as a buildathon submission and evaluated against the real Razorpay Test Mode API. Because a student project does not operate on a production merchant payment stream, the evaluation deliberately separates pipeline validation, real provider execution validation, and complete customer-paid recovery validation.",
+  },
+  requirements: {
+    functional: [
+      "Verify and persist Razorpay webhook events",
+      "Create a recovery case with a gap matrix and SLA",
+      "Propose, rank and authorize recovery actions per case",
+      "Execute approved actions durably through a worker",
+      "Attribute and measure recovery only after provider confirmation",
+    ],
+    technical: [
+      "HMAC-SHA256 webhook verification",
+      "Deterministic authorization of every financial action",
+      "Transactional outbox with worker leases and idempotent execution",
+      "Tenant-isolated semantic retrieval of past outcomes",
+      "Provider reconciliation before any recovery is counted",
+    ],
+  },
+  constraints: [
+    "Razorpay Test Mode only \u2014 no production money recovery rate is claimed",
+    "No LLM is granted direct authority to move money",
+    "Benchmark actions are never counted as recovered revenue without Razorpay confirmation",
+    "Modelled offline results stay separate from provider-confirmed outcomes",
+  ],
+  architecture: [
+    { number: "01", title: "Ingest & case", description: "Razorpay events are webhook-verified, persisted as authoritative ProviderEvents, and opened as Recovery Cases." },
+    { number: "02", title: "Intelligence & memory", description: "Failure intelligence and systemic route intelligence build the decision context, backed by Qdrant semantic memory." },
+    { number: "03", title: "Decision & economics", description: "The agentic decision engine emits a typed proposal; candidates are ranked by the Economic Optimizer using ENR." },
+    { number: "04", title: "Policy + MCP control", description: "A deterministic PolicyEngine approves or rejects; the MCPToolGateway controls which tools may run." },
+    { number: "05", title: "Durable execution", description: "ExecutionControl writes to a transactional outbox, an 18-point preflight gate clears it, and a leased worker executes." },
+    { number: "06", title: "Provider truth", description: "The Razorpay adapter runs the provider call, then reconciliation turns the response into a Recovery Outcome." },
+    { number: "07", title: "Attribution + measurement", description: "Recovery is attributed and measured, then a knowledge outbox writes verified outcomes back to semantic memory." },
+    { number: "08", title: "Operator experience", description: "An operator dashboard, ASK ARIV conversational control and Telegram alerts sit on top of the same measured state." },
+  ],
+  engineeringDecisions: [
+    {
+      decision: "Let the PolicyEngine authorize, never the model",
+      reason: "Financial operations need a deterministic decision that can be audited and reproduced",
+      alternative: "Letting the agent choose and execute the recovery action directly",
+      tradeoff: "A deterministic gate that can refuse a recovery the model wanted",
+    },
+    {
+      decision: "Rank candidates with Expected Net Recovery instead of retry-everything",
+      reason: "P(recovery) \u00d7 amount \u2212 cost \u2212 risk separates worth attempting from worth ignoring",
+      alternative: "Blind retry on every failure, or ranking on model confidence",
+      tradeoff: "Recovery probability has to be estimated, and AI confidence is explicitly not treated as recovery probability",
+    },
+    {
+      decision: "Make the MCP layer a real tool runtime, not a model-to-provider bridge",
+      reason: "Financial operations must stay behind deterministic execution controls",
+      alternative: "Letting the model call provider tools with its own arguments",
+      tradeoff: "Tool registry, schema validation, tenant ownership and server-side risk classification on every call",
+    },
+    {
+      decision: "Execute through a transactional outbox with worker leases",
+      reason: "An approved action must survive a crash without being executed twice",
+      alternative: "Calling the provider inside the request that approved the action",
+      tradeoff: "An extra persistence hop and a worker to operate, in exchange for idempotency",
+    },
+    {
+      decision: "Attribute recovery only after Razorpay confirms the payment",
+      reason: "Counting an attempted recovery as recovered revenue would be a fabricated financial outcome",
+      alternative: "Reporting successful execution attempts as recovery",
+      tradeoff: "The reported recovery rate stays at zero for cohorts that never completed a customer payment",
+    },
+    {
+      decision: "Keep a deterministic fallback when the LLM is unavailable",
+      reason: "The pipeline must still reach a decision without depending on a model being reachable",
+      alternative: "Failing the case or retrying until the model responds",
+      tradeoff: "The deterministic path is less capable than the agentic path",
+    },
+  ],
+  softwareLayer: [
+    "FastAPI service with SQLAlchemy 2 async",
+    "Deterministic PolicyEngine and ExecutionControl",
+    "Transactional outbox, worker leases and idempotent execution",
+    "Next.js operator dashboard and ASK ARIV conversational control",
+  ],
+  aiLayer: [
+    "Agentic failure diagnosis and typed decision proposals",
+    "Failure intelligence and systemic route intelligence",
+    "Systemic signal detection for dead payment rails",
+  ],
+  dataLayer: [
+    "PostgreSQL authoritative operational state",
+    "Redis queue and coordination",
+    "Qdrant tenant-isolated semantic recovery memory",
+    "Provider-confirmed attribution ledger",
+  ],
+  implementation: [
+    {
+      title: "Implementation",
+      body:
+        "Built the control plane as a FastAPI service over PostgreSQL, Redis and Qdrant: webhook ingestion into ProviderEvents, Recovery Cases, agentic diagnosis, ENR ranking, the deterministic PolicyEngine, the MCPToolGateway, the outbox and execution worker, the Razorpay adapter, reconciliation, attribution, measurement and a knowledge outbox back into semantic memory. A Next.js frontend provides the operator dashboard.",
+    },
+    {
+      title: "Running it",
+      body:
+        "The whole stack comes up with docker compose. One command, `python scripts/run_test_recovery.py --amount 100`, drives the existing pipeline end to end through a real signed webhook and prints the case, decision, economic ranking, policy result and the Razorpay Test-Mode payment link.",
+    },
+  ],
+  validation: {
+    title: "Validation",
+    body:
+      "The repository reports 302 tests passing with 0 failed, and 100% decision coverage in both reported Test-Mode benchmark cohorts. Benchmarks are produced by sending generated failure events through the real webhook ingestion path and computing metrics from persisted database state \u2014 there is no direct outcome injection and no policy bypass.",
+  },
+  evaluation: {
+    title: "Evaluation",
+    body:
+      "Benchmark A (execution scale): 25 cases, \u20b935,232.60 at risk, 25/25 decisioned, 25 execution attempts, 24 provider payment-link actions, 1 real Razorpay failure (RATE_LIMIT_EXCEEDED), 0 verified recoveries, 0% recovery rate. Benchmark B (scenario diversity): 18 cases, \u20b9145,400 at risk, 18/18 decisioned, 4 RETRY_NOW, 5 GENERATE_PAYMENT_LINK, 9 STOP_RECOVERY, 16/2 policy approved-to-review, 16 FULL_AUTO / 2 HUMAN_APPROVAL, 5 executions, 0 execution failures, 2 human escalations, 0 verified recoveries. An offline ablation over 10 seeds \u00d7 10,000 synthetic cases found the economic strategy beat rules, but adding AI and adding Qdrant did not improve modelled net recovery, and the full stack did not outperform the economic layer alone.",
+  },
+  results: {
+    title: "Results",
+    body:
+      "Reported separately from the benchmark denominators, ARIV demonstrated one complete customer-paid recovery in Razorpay Test Mode: case ec60fb5d, outcome RECOVERED, attribution ACTION_ATTRIBUTED, \u20b9100 recovered. That proves the end-to-end path from failure to provider-confirmed attribution and is explicitly not presented as a statistically significant recovery-rate experiment.",
+  },
+  failures: {
+    title: "What did not work",
+    body:
+      "Both benchmark cohorts report 0 verified recoveries, because the cohorts exercised failure \u2192 decision \u2192 policy \u2192 execution but did not include customers subsequently completing every generated recovery link. In the offline ablation, adding AI on top of the economic strategy and adding Qdrant both failed to improve modelled net recovery. Those negative results are left visible rather than reframed.",
+  },
+  lessons: [
+    "Do not give an AI agent unrestricted authority over money.",
+    "Do not call an attempted recovery a recovered payment.",
+    "AI confidence is not a recovery probability; only the economic layer may rank on probability.",
+    "Separating Test-Mode demonstrations from benchmark denominators is what keeps the numbers honest.",
+  ],
+  futureWork: [
+    "Build a properly instrumented experimental environment before making any causal recovery claim",
+    "Prove the incremental value of the AI and semantic memory layers on real cases",
+  ],
+  githubUrl: "https://github.com/praveen0767/ARIV",
+};
+
 export const projects: Project[] = [
+  ariv,
   {
     slug: "info-i-veritrust-agent",
-    number: "01",
+    number: "02",
     title: "Info-i (VeriTrust Agent)",
     shortDescription: "A multimodal verification pipeline for text, image, and audio inputs using evidence-grounded retrieval.",
     category: "AI SYSTEM",
@@ -56,7 +224,7 @@ export const projects: Project[] = [
     role: "Architecture and development",
     technologies: ["Python", "Qdrant", "FastAPI", "LangGraph", "RAG"],
     featured: true,
-    priority: 1,
+    priority: 2,
     verified: true,
     accent: "electric",
     diagram: "vertical",
@@ -116,7 +284,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sodhanegpt-crime-intelligence-platform",
-    number: "02",
+    number: "03",
     title: "SodhaneGPT - Crime Intelligence Platform",
     shortDescription: "An end-to-end platform combining structured data ingestion, geospatial analytics, graph intelligence, predictive risk scoring, and explainable ML services.",
     category: "FULL-STACK",
@@ -125,9 +293,9 @@ export const projects: Project[] = [
     role: "Architecture and development",
     technologies: ["Next.js", "XGBoost", "Python", "FastAPI", "PostgreSQL", "Tailwind CSS"],
     featured: true,
-    priority: 2,
+    priority: 3,
     verified: true,
-    accent: "violet",
+    accent: "orange",
     diagram: "horizontal",
     problem: { title: "The Problem", body: "Crime intelligence workflows can require structured ingestion, geospatial analysis, graph relationships, risk scoring, and explainable services in one system." },
     context: { title: "Context", body: "SodhaneGPT was engineered as an end-to-end crime intelligence platform using modular pipelines and model-serving APIs." },
@@ -185,7 +353,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hazard-det-road-intelligence-system",
-    number: "03",
+    number: "04",
     title: "Hazard Det - Road Intelligence System",
     shortDescription: "An edge-AI road intelligence system combining object detection, sensor fusion, telemetry, and edge-side privacy processing.",
     category: "AI SYSTEM",
@@ -194,9 +362,9 @@ export const projects: Project[] = [
     role: "Architecture and development",
     technologies: ["Python", "YOLOv8", "OpenCV", "RabbitMQ", "Raspberry Pi"],
     featured: true,
-    priority: 3,
+    priority: 4,
     verified: true,
-    accent: "cyan",
+    accent: "lime",
     diagram: "merge",
     problem: { title: "The Problem", body: "Road intelligence at the edge requires inference, sensor data, vehicle telemetry, event transport, geospatial analysis, and privacy processing to work together." },
     context: { title: "Context", body: "Hazard Det was built as an edge-AI road intelligence system using Raspberry Pi hardware and an asynchronous edge-to-cloud pipeline." },

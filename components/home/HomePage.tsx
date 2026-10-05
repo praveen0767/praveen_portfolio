@@ -1,104 +1,47 @@
 import { Hero } from "./Hero";
+import { HeroHandoff } from "./HeroHandoff";
+import { ArivSection } from "./ariv/ArivSection";
 import { FeaturedWork } from "./FeaturedWork";
-import { EngineeringLoop } from "./EngineeringLoop";
-import { Capabilities } from "./Capabilities";
-import { CareerTimeline } from "./CareerTimeline";
 import { TechToolkit } from "./TechToolkit";
-import { ProofPreview } from "./ProofPreview";
-import { LabPreview } from "./LabPreview";
+import { EngineeringPulse } from "./EngineeringPulse";
+import { JourneyTimeline } from "./JourneyTimeline";
+import { ProofWall } from "./ProofWall";
+import { AboutStrip } from "./AboutStrip";
 import { ContactCta } from "./ContactCta";
-import { Section } from "../layout/Section";
-import { Container } from "../layout/Container";
-import { decisions } from "../../content/home";
-import { profile } from "../../content/profile";
 
-export default function HomePage() {
+/**
+ * The homepage is a sentence, and the order of the sections is the grammar:
+ *
+ *   me                      Hero            identity, portrait, work / resume / socials
+ *   ↓                       HeroHandoff     particles fall and converge on the first node
+ *   what I built            ArivSection     project 01, the flagship, 8-stage control plane
+ *   ↓ what else I built     FeaturedWork    projects 02 / 03 / 04
+ *   what I build with       TechToolkit     the toolkit, filterable, with where it is used
+ *   how I think             EngineeringPulse the loop and the default call on a problem
+ *   my journey              JourneyTimeline where I got here
+ *   my proof                ProofWall       what is on record
+ *   me                      AboutStrip      the person, again
+ *                           ContactCta      the close
+ *
+ * The seven-layer FDE capability system is presented once, inside the Hero desk
+ * (DeveloperDesk), where it belongs. A second standalone copy used to render
+ * here after FeaturedWork; it repeated the same seven layers, the same
+ * technologies and the same project relationships, so it was removed rather
+ * than restyled.
+ */
+export function HomePage() {
   return (
     <>
       <Hero />
+      <HeroHandoff />
+      <ArivSection />
       <FeaturedWork />
-
-      <Section
-        id="how-i-build"
-        eyebrow="02 / Engineering"
-        heading="Understand the system before writing the feature."
-        lede="Every project here runs through the same six stages. Hover or focus a stage to see what happens in it."
-      >
-        <EngineeringLoop />
-
-        <div className="decisions">
-          <h3 className="decisions__title">Choosing the right tool for the problem</h3>
-          <ul className="decisions__grid">
-            {decisions.map((decision) => (
-              <li key={decision.problem} className="decisions__row">
-                <span className="decisions__problem">{decision.problem}</span>
-                <span className="decisions__arrow" aria-hidden="true">
-                  →
-                </span>
-                <span className="decisions__approach">{decision.approach}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
-
-      <Section
-        tone="gradient"
-        eyebrow="03 / Capability"
-        heading="Four ways I contribute to a product."
-        lede="Not tools for their own sake — capability is how the layers of a system get built and kept alive."
-      >
-        <Capabilities />
-      </Section>
-
-      <Section
-        id="journey"
-        tone="light"
-        eyebrow="04 / Journey"
-        heading="Engineering is built in sequences, not leaps."
-        lede="Education, a hands-on internship, and projects that keep getting more demanding."
-      >
-        <CareerTimeline />
-      </Section>
-
-      <Section
-        id="toolkit"
-        eyebrow="05 / Toolkit"
-        heading="The stack behind the work."
-        lede="Every technology here is one I have actually used. Filter by category, or select one to see where it shows up."
-      >
-        <TechToolkit />
-      </Section>
-
-      <Section
-        id="proof"
-        tone="gradient"
-        eyebrow="06 / Proof"
-        heading="Competition results where the systems were built under pressure."
-        lede="National-level innovation challenges, shipped with a team against a fixed deadline."
-      >
-        <ProofPreview />
-      </Section>
-
-      <Section
-        tone="light"
-        eyebrow="07 / Lab"
-        heading="Work in progress, published honestly."
-        lede="Experiments, engineering notes and a build log. Empty shelves stay empty until there is something worth reading."
-      >
-        <LabPreview />
-      </Section>
-
-      <Section tone="dark" id="contact" eyebrow="08 / Contact" className="section--contact">
-        <ContactCta />
-      </Section>
-
-      <div className="signature" aria-hidden="true">
-        <Container>
-          <span className="signature__text">{profile.name}</span>
-          <span className="signature__line" />
-        </Container>
-      </div>
+      <TechToolkit />
+      <EngineeringPulse />
+      <JourneyTimeline />
+      <ProofWall />
+      <AboutStrip />
+      <ContactCta />
     </>
   );
 }

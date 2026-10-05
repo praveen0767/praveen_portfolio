@@ -35,7 +35,7 @@ export function LabPage() {
     <>
       <Section tone="dark" eyebrow="Lab" className="lab-hero">
         <p className="lab-hero__eyebrow">
-          <span className="hero__pulse" aria-hidden="true" />
+          <span className="pulse-dot" aria-hidden="true" />
           Engineering lab
         </p>
         <h1 className="lab-hero__title">Work in progress, published honestly.</h1>

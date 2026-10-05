@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { mobileNavLinks, navLinks } from "./nav-links";
+import { ThemeToggle } from "../layout/ThemeToggle";
+import { Magnetic } from "../motion/Magnetic";
 import { profile } from "../../content/profile";
 
 export function Navbar() {
@@ -19,11 +21,13 @@ export function Navbar() {
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const close = useCallback(() => setOpenedOn(null), []);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -31,9 +35,9 @@ export function Navbar() {
   return (
     <header className="site-header" data-scrolled={scrolled ? "true" : undefined} data-open={open ? "true" : undefined}>
       <div className="container navbar">
-        <Link className="wordmark" href="/" aria-label="Praveen Kumar S, home">
+        <Link className="wordmark" href="/" aria-label={`${profile.name}, home`}>
           <span className="wordmark__dot" aria-hidden="true" />
-          PRAVEEN.KUMAR
+          {profile.wordmark}
         </Link>
 
         <nav className="nav-links" aria-label="Primary navigation">
@@ -51,12 +55,16 @@ export function Navbar() {
         </nav>
 
         <div className="navbar__actions">
-          <Link className="nav-cta" href={profile.resumePath} target="_blank" rel="noopener noreferrer">
-            Resume
-            <span className="nav-cta__arrow" aria-hidden="true">
-              ↗
-            </span>
-          </Link>
+          <ThemeToggle />
+
+          <Magnetic className="nav-cta-wrap">
+            <Link className="nav-cta" href={profile.resumePath} target="_blank" rel="noopener noreferrer">
+              Resume
+              <span className="nav-cta__arrow" aria-hidden="true">
+                ↗
+              </span>
+            </Link>
+          </Magnetic>
 
           <button
             ref={triggerRef}
@@ -75,7 +83,7 @@ export function Navbar() {
         </div>
       </div>
 
-      <MobileMenu open={open} onClose={() => setOpenedOn(null)} triggerRef={triggerRef} />
+      <MobileMenu open={open} onClose={close} triggerRef={triggerRef} />
     </header>
   );
 }
@@ -148,6 +156,34 @@ function MobileMenu({ open, onClose, triggerRef }: MobileMenuProps) {
         >
           Resume <span aria-hidden="true">↗</span>
         </Link>
+
+        <ul className="mobile-menu__social">
+          <li>
+            <a href={profile.github} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer">
+              WhatsApp
+            </a>
+          </li>
+          <li>
+            <a href={profile.instagram} target="_blank" rel="noopener noreferrer">
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${profile.email}?subject=${encodeURIComponent(profile.emailSubject)}`}>
+              Email
+            </a>
+          </li>
+        </ul>
       </nav>
     </div>
   );

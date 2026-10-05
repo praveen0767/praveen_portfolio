@@ -27,6 +27,7 @@ export function LinkButton({
   href,
   target,
   rel,
+  ...props
 }: AnchorHTMLAttributes<HTMLAnchorElement> & {
   variant?: Variant;
   href: string;
@@ -34,6 +35,7 @@ export function LinkButton({
 }) {
   const classes = buttonClass(variant, className);
   const isExternal = target === "_blank" || href.startsWith("mailto:") || href.startsWith("http");
+  const resolvedRel = rel ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
   if (isExternal) {
     return (
@@ -41,7 +43,8 @@ export function LinkButton({
         className={classes}
         href={href}
         target={target}
-        rel={rel ?? (target === "_blank" ? "noopener noreferrer" : undefined)}
+        rel={resolvedRel}
+        {...props}
       >
         {children}
       </a>
@@ -49,7 +52,7 @@ export function LinkButton({
   }
 
   return (
-    <Link className={classes} href={href}>
+    <Link className={classes} href={href} {...props}>
       {children}
     </Link>
   );

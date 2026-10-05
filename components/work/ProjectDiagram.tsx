@@ -108,6 +108,20 @@ function MergeDiagram({ project, compact, label }: BaseProps) {
   const steps = project.architecture;
   const [inputs, ...rest] = steps;
   const railY = 132;
+
+  /**
+   * The edge-stage row is laid out inside a fixed 320-unit viewBox. Plate width
+   * and pitch are derived from the step count so a project with more than three
+   * stages still fits: up to three stages keep the original 80/88 geometry, and
+   * longer chains shrink the plates and close the gaps rather than running past
+   * the right edge. The row stays centred, so the convergence rail remains at 160.
+   */
+  const rowX = 30;
+  const rowWidth = 260;
+  const plateGap = 8;
+  const plateWidth = Math.min(80, (rowWidth - (rest.length - 1) * plateGap) / rest.length);
+  const platePitch = plateWidth + plateGap;
+  const rowCentre = rowX + rowWidth / 2;
   return (
     <svg
       className="diagram"
@@ -125,7 +139,7 @@ function MergeDiagram({ project, compact, label }: BaseProps) {
           </text>
           <path
             className="diagram__wire diagram__wire--curve"
-            d={`M ${x} 46 C ${x} 96, 160 84, 160 ${railY - 14}`}
+            d={`M ${x} 46 C ${x} 96, ${rowCentre} 84, ${rowCentre} ${railY - 14}`}
           />
           <circle className="diagram__packet" r={2.6} cx={x} cy={62}>
             <animate
@@ -139,20 +153,20 @@ function MergeDiagram({ project, compact, label }: BaseProps) {
         </g>
       ))}
 
-      <line className="diagram__wire" x1={160} y1={railY - 14} x2={160} y2={railY - 40} />
+      <line className="diagram__wire" x1={rowCentre} y1={railY - 14} x2={rowCentre} y2={railY - 40} />
 
       {rest.map((step, index) => {
-        const x = 30 + index * 88;
+        const x = rowX + index * platePitch;
         return (
           <g key={step.number} className="diagram__node">
-            <rect className="diagram__plate diagram__plate--solid" x={x} y={railY} width={80} height={30} rx={9} />
-            <text className="diagram__label diagram__label--on" x={x + 40} y={railY + 19} textAnchor="middle">
+            <rect className="diagram__plate diagram__plate--solid" x={x} y={railY} width={plateWidth} height={30} rx={9} />
+            <text className="diagram__label diagram__label--on" x={x + plateWidth / 2} y={railY + 19} textAnchor="middle">
               {step.title}
             </text>
             {index < rest.length - 1 && (
               <>
-                <line className="diagram__wire" x1={x + 80} y1={railY + 15} x2={x + 88} y2={railY + 15} />
-                <circle className="diagram__packet" r={2.4} cx={x + 82} cy={railY + 15}>
+                <line className="diagram__wire" x1={x + plateWidth} y1={railY + 15} x2={x + platePitch} y2={railY + 15} />
+                <circle className="diagram__packet" r={2.4} cx={x + plateWidth + plateGap / 2} cy={railY + 15}>
                   <animateTransform
                     attributeName="transform"
                     type="translate"

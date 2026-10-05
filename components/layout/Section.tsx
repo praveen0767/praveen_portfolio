@@ -8,6 +8,12 @@ type SectionProps = Omit<HTMLAttributes<HTMLElement>, "title"> & {
   tone?: SectionTone;
   eyebrow?: string;
   heading?: string;
+  /**
+   * Heading level for the section heading. A section that carries the page
+   * identity should pass `1`; every other section stays at `2` so the outline
+   * never skips a level.
+   */
+  headingLevel?: 1 | 2;
   lede?: ReactNode;
   /** Small slot on the right of the section header, e.g. a count or a link. */
   aside?: ReactNode;
@@ -22,6 +28,7 @@ export function Section({
   tone = "dark",
   eyebrow,
   heading,
+  headingLevel = 2,
   lede,
   aside,
   children,
@@ -32,6 +39,8 @@ export function Section({
   const classes = ["section", `section--${tone}`, flush ? "section--flush" : "", className]
     .filter(Boolean)
     .join(" ");
+
+  const Heading = (headingLevel === 1 ? "h1" : "h2") as "h1" | "h2";
 
   return (
     <section id={id} className={classes} {...props}>
@@ -45,7 +54,7 @@ export function Section({
                   {eyebrow}
                 </p>
               )}
-              {heading && <h2 className="section-title">{heading}</h2>}
+              {heading && <Heading className="section-title">{heading}</Heading>}
               {lede && <p className="section-lede">{lede}</p>}
             </div>
             {aside && <div className="section-head__aside">{aside}</div>}

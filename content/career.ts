@@ -7,9 +7,13 @@ export type CareerEvent = {
   date?: string;
   type: CareerEventType;
   title: string;
+  /** Short qualifier line under the title — used by builds that carry a system name. */
+  subtitle?: string;
   organization?: string;
   description: string;
   relatedProjects?: string[];
+  /** Overrides the default case-study link label, e.g. "View ARIV". */
+  linkLabel?: string;
   priority: CareerEventPriority;
 };
 
@@ -63,5 +67,19 @@ export const careerEvents: CareerEvent[] = [
     description: "Built a full-stack intelligence platform for crime data.",
     relatedProjects: ["sodhanegpt-crime-intelligence-platform"],
     priority: "large",
-  }
+  },
+  {
+    id: "ariv",
+    year: "2026",
+    /* Verified against the ARIV project record, not invented. */
+    date: "September 2026",
+    type: "PROJECT",
+    title: "ARIV",
+    subtitle: "Agentic Payment Recovery",
+    description:
+      "Agentic payment recovery for Razorpay Test Mode \u2014 diagnosis, recovery proposals, economic ranking, deterministic policy execution, durable execution and provider-confirmed attribution.",
+    relatedProjects: ["ariv-agentic-revenue-recovery"],
+    linkLabel: "View ARIV",
+    priority: "large",
+  },
 ];

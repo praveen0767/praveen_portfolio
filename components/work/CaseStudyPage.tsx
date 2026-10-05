@@ -2,14 +2,19 @@ import Link from "next/link";
 import { Container } from "../layout/Container";
 import { Reveal } from "../ui/Reveal";
 import { TechChip } from "../ui/TechLogo";
+import { ProjectMark } from "../ui/ProjectMark";
 import { ProjectDiagram } from "./ProjectDiagram";
 import { adjacentProjects } from "../../content/projects";
 import type { Project } from "../../content/projects";
 
+/**
+ * Must stay in sync with the `CaseSection` ids below. The smoke test asserts
+ * every entry resolves to a rendered section id, so drift fails the build
+ * rather than shipping a dead anchor.
+ */
 const toc = [
   { id: "overview", label: "Overview" },
   { id: "problem", label: "Problem" },
-  { id: "context", label: "Context" },
   { id: "requirements", label: "Requirements" },
   { id: "architecture", label: "Architecture" },
   { id: "decisions", label: "Decisions" },
@@ -30,7 +35,7 @@ export function CaseStudyPage({ project }: { project: Project }) {
   ].filter((layer) => layer.items.length > 0);
 
   return (
-    <article className="case">
+    <article className="case" data-accent={project.accent}>
       <Container>
         <Link className="back-link" href="/work">
           <span aria-hidden="true">←</span> All work
@@ -42,7 +47,10 @@ export function CaseStudyPage({ project }: { project: Project }) {
               <span className="eyebrow__rule" aria-hidden="true" />
               {project.number} / {project.category} / {project.status} / {project.year}
             </p>
-            <h1 className="case-hero__title">{project.title}</h1>
+            <div className="case-hero__title-row">
+              <ProjectMark slug={project.slug} title={project.title} size={36} />
+              <h1 className="case-hero__title">{project.title}</h1>
+            </div>
             <p className="case-hero__lede">{project.shortDescription}</p>
             {project.role ? <p className="case-hero__role">{project.role}</p> : null}
             <ul className="case-hero__stack">
@@ -52,6 +60,18 @@ export function CaseStudyPage({ project }: { project: Project }) {
                 </li>
               ))}
             </ul>
+
+            {project.githubUrl ? (
+              <a
+                className="case-hero__repo"
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View repository
+                <span aria-hidden="true"> ↗</span>
+              </a>
+            ) : null}
           </div>
 
           <div className="case-hero__visual">

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Section } from "../layout/Section";
 import { Reveal } from "../ui/Reveal";
 import { LinkButton } from "../ui/Button";
+import { SocialIcon } from "../ui/SocialLinks";
+import { CopyEmail } from "../ui/CopyEmail";
 import { contactChannels, profile } from "../../content/profile";
 
 const whatToInclude = [
@@ -22,8 +24,8 @@ export function ContactPage() {
     <>
       <Section tone="dark" eyebrow="Contact" className="contact-hero">
         <p className="contact-hero__eyebrow">
-          <span className="hero__pulse" aria-hidden="true" />
-          Open to software engineering and applied AI work
+          <span className="pulse-dot" aria-hidden="true" />
+          {profile.baseLine}
         </p>
         <h1 className="contact-hero__title">
           Tell me what you are building and what is currently in the way.
@@ -32,18 +34,19 @@ export function ContactPage() {
           Email is the fastest route. I read every message and reply with either a direct answer or an honest
           reason I am not the right person for it.
         </p>
-        <LinkButton href={`mailto:${profile.email}`}>
-          {profile.email}
+        <LinkButton href={`mailto:${profile.email}?subject=${encodeURIComponent(profile.emailSubject)}`}>
+          Email me
           <span className="btn__arrow" aria-hidden="true">
             →
           </span>
         </LinkButton>
+        <CopyEmail />
       </Section>
 
       <Section
         tone="light"
         eyebrow="Channels"
-        heading="Three ways to reach me, all verified."
+        heading={`${contactChannels.length} ways to reach me, all verified.`}
         lede="No forms, no scheduling link, no funnel."
       >
         <ul className="contact-channels">
@@ -55,7 +58,12 @@ export function ContactPage() {
                 target={channel.external ? "_blank" : undefined}
                 rel={channel.external ? "noopener noreferrer" : undefined}
               >
-                <span className="contact-channel__label">{channel.label}</span>
+                <span className="contact-channel__label">
+                  <span className="contact-channel__icon" style={{ color: `var(--brand-${channel.id})` }}>
+                    <SocialIcon id={channel.id} size={18} />
+                  </span>
+                  {channel.label}
+                </span>
                 <span className="contact-channel__value">{channel.description}</span>
                 <span className="contact-channel__arrow" aria-hidden="true">
                   {channel.external ? "↗" : "→"}

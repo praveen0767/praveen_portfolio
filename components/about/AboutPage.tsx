@@ -4,7 +4,7 @@ import { Section } from "../layout/Section";
 import { Reveal } from "../ui/Reveal";
 import { LinkButton } from "../ui/Button";
 import { TechChip } from "../ui/TechLogo";
-import { aboutPrinciples, profile } from "../../content/profile";
+import { aboutPrinciples, profile, story } from "../../content/profile";
 import { capabilities } from "../../content/home";
 import { orderedProjects } from "../../content/projects";
 import { achievements } from "../../content/proof/achievements";
@@ -19,11 +19,11 @@ export function AboutPage() {
         <div className="about-hero__grid">
           <div className="about-hero__copy">
             <p className="about-hero__eyebrow">
-              <span className="hero__pulse" aria-hidden="true" />
+              <span className="pulse-dot" aria-hidden="true" />
               {profile.professionalTitle} / {profile.secondaryTitle}
             </p>
             <h1 className="about-hero__title">
-              Software engineering, applied AI, and systems that keep working after the demo.
+              The person behind the code, and what I actually think about while writing it.
             </h1>
             <p className="about-hero__lede">{profile.heroStatement}</p>
             <ul className="about-hero__actions">
@@ -46,7 +46,7 @@ export function AboutPage() {
             <Image
               className="about-card__portrait"
               src={profile.portraitPath}
-              alt="Praveen Kumar S"
+              alt={`${profile.name}, ${profile.professionalTitle} in ${profile.location}`}
               width={348}
               height={457}
               sizes="(max-width: 1100px) 100vw, 340px"
@@ -74,6 +74,22 @@ export function AboutPage() {
 
       <Section
         tone="light"
+        eyebrow="Story"
+        heading="Four things worth knowing before you read the code."
+        lede="This is the personal account. Every project page below is the technical one."
+      >
+        <div className="story">
+          {story.map((block, index) => (
+            <Reveal key={block.label} delay={index * 70} className="story__block">
+              <p className="story__label">{block.label}</p>
+              <h3 className="story__title">{block.title}</h3>
+              <p className="story__body">{block.body}</p>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      <Section
         eyebrow="Thinking"
         heading="Four principles I keep coming back to."
         lede="They decide what I build, how I build it, and when I refuse to add another layer."
@@ -114,7 +130,7 @@ export function AboutPage() {
         tone="light"
         eyebrow="Currently"
         heading="What is taking the time right now."
-        lede="B.Tech in Artificial Intelligence and Data Science, with three shipped systems and a competition record behind them."
+        lede="B.Tech in Artificial Intelligence and Data Science, with three end-to-end prototype systems and a competition record behind them."
       >
         <div className="about-current">
           <div className="about-current__stack">

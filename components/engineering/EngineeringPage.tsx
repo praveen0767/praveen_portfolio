@@ -1,11 +1,12 @@
 import { Section } from "../layout/Section";
 import { Reveal } from "../ui/Reveal";
 import { LinkButton } from "../ui/Button";
+import { EngineeringFlow } from "./EngineeringFlow";
+import { SystemMap } from "./SystemMap";
 import {
   decisionRules,
   depthMatrix,
   developingTopics,
-  engineeringLoop,
   principles,
   questions,
 } from "../../content/engineering";
@@ -21,6 +22,7 @@ export function EngineeringPage() {
         tone="dark"
         eyebrow="Engineering"
         heading="How I turn an ambiguous problem into a system that holds up."
+        headingLevel={1}
         lede="The same loop shows up in every project here: narrow the problem, design the boundaries, build the smallest thing that proves the architecture, then measure it."
         aside={
           <LinkButton href="/work" variant="quiet">
@@ -31,17 +33,8 @@ export function EngineeringPage() {
           </LinkButton>
         }
       >
-        <ol className="flow">
-          {engineeringLoop.map((stage) => (
-            <Reveal as="li" key={stage.number} delay={Number(stage.number) * 40}>
-              <article className="flow__stage">
-                <span className="flow__number">{stage.number}</span>
-                <h3 className="flow__title">{stage.title}</h3>
-                <p className="flow__body">{stage.body}</p>
-              </article>
-            </Reveal>
-          ))}
-        </ol>
+        <SystemMap />
+        <EngineeringFlow />
       </Section>
 
       <Section

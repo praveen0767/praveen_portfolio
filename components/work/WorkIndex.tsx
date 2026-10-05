@@ -5,7 +5,9 @@ import Link from "next/link";
 import { Section } from "../layout/Section";
 import { Reveal } from "../ui/Reveal";
 import { TechChip } from "../ui/TechLogo";
+import { ProjectMark } from "../ui/ProjectMark";
 import { ProjectDiagram } from "./ProjectDiagram";
+import { ProjectPreview } from "./ProjectPreview";
 import { activeProjectCategories, orderedProjects } from "../../content/projects";
 import type { Project } from "../../content/projects";
 
@@ -39,7 +41,8 @@ export function WorkIndex() {
     <Section
       tone="light"
       eyebrow="Work / Archive"
-      heading="The full archive of shipped systems."
+      heading="Every system I have built, with the decisions behind it."
+      headingLevel={1}
       lede="Three verified projects, each with the architecture, decisions and failure modes behind it."
       aside={
         <p className="project-count">
@@ -95,10 +98,8 @@ export function WorkIndex() {
       ) : (
         <ul className="archive">
           {visible.map((project, index) => (
-            <Reveal key={project.slug} delay={index * 60}>
-              <li>
-                <ArchiveRow project={project} />
-              </li>
+            <Reveal as="li" key={project.slug} delay={index * 60}>
+              <ArchiveRow project={project} />
             </Reveal>
           ))}
         </ul>
@@ -125,9 +126,20 @@ function ArchiveRow({ project }: { project: Project }) {
         </div>
 
         <h2 className="archive-row__title">
+          <ProjectMark slug={project.slug} title={project.title} size={30} />
           <Link href={`/work/${project.slug}`}>{project.title}</Link>
         </h2>
         <p className="archive-row__desc">{project.shortDescription}</p>
+
+        <ProjectPreview
+          steps={project.architecture.map((step) => ({
+            number: step.number,
+            title: step.title,
+            description: step.description,
+          }))}
+          accent={project.accent}
+          label={`Architecture steps for ${project.title}`}
+        />
 
         <ul className="archive-row__stack">
           {project.technologies.map((tech) => (

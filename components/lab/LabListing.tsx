@@ -39,7 +39,13 @@ export function LabListing({ type }: { type: ListingType }) {
         </Link>
       </div>
 
-      <Section tone={empty ? "light" : "dark"} eyebrow={eyebrow} heading={title} lede={lede}>
+      <Section
+        tone={empty ? "light" : "dark"}
+        eyebrow={eyebrow}
+        heading={title}
+        headingLevel={1}
+        lede={lede}
+      >
         {type === "build-log" ? <BuildLog entries={buildLog} /> : null}
         {type === "experiments" ? <Shelf type={type} items={experiments} /> : null}
         {type === "notes" ? <Shelf type={type} items={notes} /> : null}

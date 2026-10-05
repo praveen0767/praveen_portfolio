@@ -19,26 +19,31 @@ export function ProofPage() {
         tone="dark"
         eyebrow="Proof"
         heading="Evidence, not adjectives."
-        lede="Competition results, a paid internship, and systems that shipped. Every entry below is on the record."
+        headingLevel={1}
+        lede="Competition results, a paid internship, and prototype systems with their limits documented. Every entry below is on the record."
       >
         <ul className="tally">
           <li>
-            <span className="tally__value">{champions.length}</span>
-            <span className="tally__label">Championships</span>
+            <span className="tally__value">7+</span>
+            <span className="tally__label">National Hackathon Wins</span>
           </li>
           <li>
-            <span className="tally__value">{finalists.length}</span>
-            <span className="tally__label">National top-10 results</span>
+            <span className="tally__value">15+</span>
+            <span className="tally__label">Merit Wins</span>
           </li>
           <li>
-            <span className="tally__value">{experiences.length}</span>
-            <span className="tally__label">Paid internship</span>
+            <span className="tally__value">50+</span>
+            <span className="tally__label">Hackathons Participated</span>
           </li>
           <li>
             <span className="tally__value">{achievements.length}</span>
-            <span className="tally__label">Records on file</span>
+            <span className="tally__label">Verified records attached</span>
           </li>
         </ul>
+
+        <p className="proof-note" style={{ marginTop: '1rem', fontSize: '0.85rem' }}>
+          Aggregate claims provided by Praveen; archive below contains individually documented records.
+        </p>
       </Section>
 
       <Section
@@ -166,7 +171,13 @@ export function ProofPage() {
                 ↗
               </span>
             </LinkButton>
-            <LinkButton href="/contact" variant="outline">
+            <LinkButton href="/achievements" variant="outline">
+              All achievements
+              <span className="btn__arrow" aria-hidden="true">
+                →
+              </span>
+            </LinkButton>
+            <LinkButton href="/contact" variant="quiet">
               Get in touch
               <span className="btn__arrow" aria-hidden="true">
                 →
@@ -192,7 +203,7 @@ function Record({ achievement, compact = false }: { achievement: Achievement; co
         <span className="record__org">{achievement.organization}</span>
       </div>
       <div className="record__body">
-        <h4 className="record__title">{achievement.event}</h4>
+        <h3 className="record__title">{achievement.event}</h3>
         <p className="record__contribution">{achievement.contribution}</p>
         <span className="record__meta">
           {achievement.category}
