@@ -397,10 +397,12 @@ p {
   flex-direction: column;
   min-height: 100svh;
   isolation: isolate;
+  overflow: visible;
 }
 
 .site-main {
   flex: 1;
+  padding-top: var(--header-h);
 }
 
 .container {
@@ -955,11 +957,18 @@ html[data-theme="light"] .pointer-fx__orb[data-ready="true"] {
 /* ── 6. Navigation ───────────────────────────────────────────────────────── */
 
 .site-header {
-  position: sticky;
+  position: fixed !important;
   top: 0;
-  z-index: 100;
-  transition: background-color 300ms var(--ease), border-color 300ms var(--ease),
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+
+  transition:
+    background-color 300ms var(--ease),
+    border-color 300ms var(--ease),
     backdrop-filter 300ms var(--ease);
+
   border-bottom: 1px solid transparent;
 }
 
