@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 /**
  * Global back-to-top control.
- * Appears when the user scrolls down 150px.
+ * Appears when the user scrolls down 120px.
  * Smoothly scrolls back to the top of the document.
  */
 export function BackToTop() {
@@ -12,12 +12,8 @@ export function BackToTop() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show button when page is scrolled down 150px
-      if (window.scrollY > 150) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      // Show button once the page is scrolled down 120px
+      setIsVisible(window.scrollY >= 120);
     };
 
     // Passive listener for performance

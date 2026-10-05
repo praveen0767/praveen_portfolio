@@ -7125,8 +7125,12 @@ html[data-theme="light"] {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
-  padding: 0.4rem 0.6rem;
+
+  /* Pull the Hero → ARIV cue upward substantially */
+  margin-top: -2.4rem;
+
+  padding: 0.15rem 0.6rem;
+
   font-family: var(--font-mono-stack);
   font-size: 0.64rem;
   letter-spacing: 0.18em;
@@ -10298,7 +10302,12 @@ html[data-theme="light"] .arivsys__canvas {
 .back-to-top {
   position: fixed;
   right: 24px;
-  top: 42vh;
+  /* Pinned to the bottom-right of the viewport (fixed, out of document
+     flow) so it never overlaps the Hero, portrait, FDE panel, CTA, or
+     socials, and never shifts layout. Stays within the viewport while
+     scrolling. */
+  top: 40vh;
+  bottom: auto;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -10343,7 +10352,7 @@ html[data-theme="light"] .arivsys__canvas {
 
 @media (max-width: 1320px) {
   .back-to-top {
-    right: 10px;
+    right: 12px;
   }
 }
 
@@ -10364,3 +10373,4 @@ html[data-theme="light"] .arivsys__canvas {
     transform: none;
   }
 }
+
