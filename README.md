@@ -41,3 +41,4 @@ The app is compatible with Vercel or another Next.js host.
 - Required production variable: `NEXT_PUBLIC_SITE_URL`
 
 Deployment, domain, DNS, resume, and verified professional contact configuration remain manual production steps.
+# praveen_portfolio
